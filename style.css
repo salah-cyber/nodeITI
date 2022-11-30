@@ -1,0 +1,10 @@
+h1{
+    text-align: center;
+    font-size: large;
+    font-style: italic;
+    color: chartreuse;
+    font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+*{
+    background-color: black;
+}
