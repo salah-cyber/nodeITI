@@ -1,44 +1,32 @@
-const { log } = require('console');
-const fs = require('fs');
-//directories
-//make new dir
-fs.mkdir('newDir',(err) => {
-    if (err) {
-        console.log('err occured');        
-    }else{
-    process.chdir('./newDir')
-    fs.writeFile('./childFile.txt', 'thi is a file inside a directory',(err)=>{
-            if(err)
-            console.log('err occured');
-        })
-    }});
+// event module
+// فيه حاجة حصلت في التطبيق واحن بنرد عليها 
+const EventEmitter = require('events')
+// EventEmitter is a class 
+
+//make instantance
+let myEventObj = new EventEmitter();
 
 
 
-
-//remove dir
-fs.rmdir('./newDir',{ recursive: true },(err)=>{
-    if (err) {
-        console.log('err');
-    }
+//reister on lookup event
+myEventObj.once('lookup',()=>{
+    console.log('lookup event fired #1');
+}); // will be fired only once
+myEventObj.on('lookup',()=>{
+    console.log('lookup event fired #2');
 }); 
+let fun = ()=>{console.log('lookup event fired #3');}
+myEventObj.on('lookup',fun);// turned off at third firing
 
 
 
+//firing lookup event twice
+myEventObj.emit('lookup');
+console.log('------------------------------------');
+myEventObj.emit('lookup');
+console.log('------------------------------------');
 
-
-
-
-
-
-
-//read dir
-fs.readdir('./',(err,files)=>{
-    if (err) {
-        console.log('error');
-    }else{
-        console.log(files);
-    }
-})
-// fs.readdir take dir and return err and files that i take them
-// in a function a duse them
+setTimeout(()=>{
+    myEventObj.off('lookup',fun)
+    myEventObj.emit('lookup')
+},1000)
