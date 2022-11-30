@@ -1,1 +1,5 @@
 node 19.2.0
+to run server
+1- npm install -g nodemon
+2- nodemon server
+3- go to localhost:3000

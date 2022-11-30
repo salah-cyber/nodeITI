@@ -9,5 +9,19 @@
 </head>
 <body>
     <h1>hello from node erver</h1>
+    <script>
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET','http://localhost:3000/api/students');
+        xhr.onreadystatechange = function () {
+            if(xhr.readyState == 4 && xhr.status == 200){
+                let dataObj = JSON.stringify(xhr.responseText);
+                console.log(dataObj); //localhost:3000/home
+            }
+        }
+        xhr.send(); 
+        // صفحة المنزل فيها طلب اجاكس بعد مالصفح تحمل تقوم عاملة طلب لصفحة 
+        // الطلبة وواخدة الداتا اللي راجعالها وتحولها لكائن جافا اسكربت وتسستخدمها 
+        
+    </script>
 </body>
 </html>
