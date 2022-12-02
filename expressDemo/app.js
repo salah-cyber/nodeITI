@@ -3,6 +3,8 @@ const express = require('express') // express is a web app framework
 const app = express(); // express module is a fun that return app object 
 const path = require('path');
 
+app.use(express.urlencoded({extended:true}))
+app.use(express.json());
 
 const port = process.env.PORT||3000;
 const students = [
@@ -19,6 +21,7 @@ const students = [
 //sending json from api endpoint
 //handling all students request
 app.get('/api/students',(req,res)=>{
+    res.set('access-control-Allow-Origin', '*'); 
     res.json(students)
 })
 //handling A student request by id
@@ -47,8 +50,23 @@ app.get('/welcome.html',(req,res)=>{
     console.log(req.query);
     res.sendFile(path.join(__dirname,'/welcome.html'));
 })
-app.use(express.urlencoded({extended:true}))
+
+//3-request bodyy
 app.post('/welcome.html',(req,res)=>{
     //console.log(req.query);
     res.send(`thanks ${req.body.fnm} ${req.body.lnm} for send requirind data`);
 })
+
+
+
+//test rest api services
+//cmd as powershell
+//online as postwoman
+//3rd party tool as postman, fiddler 
+
+
+//poweshell
+//Invoke-webrequest -uri http://localhost:3000/ -method GET
+//(Invoke-webrequest -uri http://localhost:3000/ -method GET).Content
+//Invoke-RestMethod -uri http://localhost:3000/api/students -method GET
+//Invoke-RestMethod -uri http://localhost:3000/welcome.html -method POST -body @{fnm='lala';lnm='ahmed'}
