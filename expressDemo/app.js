@@ -2,7 +2,11 @@ const express = require('express')
 const app = express();
 const path = require('path');
 const Ajv = require("ajv")
-const ajv = new Ajv() // options can be passed, e.g. {allErrors: true}
+const ajv = new Ajv() 
+//------------------------------------------------------------------------------
+app.use(express.urlencoded({extended:true}))
+app.use(express.json());
+app.use(express.static('public')) //static files(css, js,img, html,..)
 //------------------------------------------------------------------------------
 const schema = {
     type: "object",
@@ -14,9 +18,6 @@ const schema = {
     additionalProperties: false
   }
   let validate = ajv.compile(schema);
-//------------------------------------------------------------------------------
-app.use(express.urlencoded({extended:true}))
-app.use(express.json());
 //------------------------------------------------------------------------------
 const port = process.env.PORT||3000;
 app.listen(port,()=>{console.log(`listening....!!! port ${port}`)}); 
