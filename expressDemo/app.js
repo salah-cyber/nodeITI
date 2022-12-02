@@ -9,7 +9,8 @@ app.use(express.json());
 app.use(express.static('public')) //static files(css, js,img, html,..)
 //app.use('/assets',express.static('public')) url -> 3000/assets/nz.html but shourd change src in html for js/css/img
 //------------------------------------------------------------------------------
-// my middlware
+// my custom middlware
+// logging
 app.use((req,res,next) => {
     console.log("logging ..");
     next();
