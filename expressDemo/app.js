@@ -27,6 +27,19 @@ const students = [
     {name:'reda', course:'francais',id:1}
 ]
 //------------------------------------------------------------------------------
+app.all('*',(req,res,next)=>{
+    console.log('this middleware will be executed every time whatever the method or url');
+    next();
+})
+//------------------------------------------------------------------------------
+app.get('/'
+       ,(req,res,next)=>{console.log('first middleWare');next();}
+       ,(req,res,next)=>{console.log('second middleWare');next();}
+       ,(req,res,next)=>{console.log('3rd middleWare');next();}
+       ,(req,res,next)=>{console.log('4th middleWare');next();}
+       ,(req,res)=>{res.sendFile(path.join(__dirname,'/main.html')); }
+       )
+//------------------------------------------------------------------------------
 app.get('/api/students',(req,res)=>{
     res.set('access-control-Allow-Origin', '*'); 
     res.json(students)
@@ -42,10 +55,6 @@ app.get('/api/students/:id',(req,res)=>{
     }else{
         res.send('nOt FoUnD')
     }
-})
-//------------------------------------------------------------------------------
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'/main.html')); 
 })
 //------------------------------------------------------------------------------
 app.get('/welcome.html',(req,res)=>{
