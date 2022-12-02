@@ -1,6 +1,8 @@
 //entry file
 const express = require('express') // express is a web app framework
 const app = express(); // express module is a fun that return app object 
+const path = require('path');
+
 const port = process.env.PORT||3000;
 const students = [
     {name:'sasa', course:'hesab',id:2},
@@ -12,13 +14,18 @@ const students = [
 
 
 
-
-app.listen(port,()=>{console.log(`listening....!!! port ${port}`)}); //nodemon app
-//to force set port from cmd -> set PORT=7000   powershell -> $env:PORT=7000
+//localhost:3000/
+app.listen(port,()=>{console.log(`listening....!!! port ${port}`)}); 
 app.get('/',(req,res)=>{
-    console.log('reques recieved.....');
-    res.send('u r at root page') // dont need res.end() because it executed implicitly
+    res.sendFile(path.join(__dirname,'/main.html')); //contain form that ask to return welcome.html
 })
+//localhost:3000/welcome.html
+app.get('/welcome.html',(req,res)=>{
+    console.log(req.query);
+    res.sendFile(path.join(__dirname,'/welcome.html'));
+})
+
+
 
 //sending json from api endpoint
 //handling all students request
@@ -27,6 +34,7 @@ app.get('/api/students',(req,res)=>{
 })
 
 //handling A student request by id
+// passing data from client to server via url parameter
 app.get('/api/students/:id',(req,res)=>{
     let id = req.params.id; //i take id from url
     let std =   students.find((val,index,arr)=>{ //find array method 
@@ -39,3 +47,6 @@ if (std) {
 }
 
 })
+
+//passing data from client side to server side 
+//1-url param   2-http requet body   3-query string ->?nm=x&age=10
