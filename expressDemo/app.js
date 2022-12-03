@@ -1,3 +1,4 @@
+// ترتيب الميدل ويير بيفرق معاي 
 const express = require('express') 
 const app = express();
 const path = require('path');
@@ -5,12 +6,14 @@ const Ajv = require("ajv");
 const { read } = require('fs');
 const ajv = new Ajv() 
 const cookieParser = require('cookie-parser')
+const helmet = require("helmet"); // notice change in response header in browser
 //------------------------------------------------------------------------------
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
 app.use(express.static('public')) //static files(css, js,img, html,..)
 //app.use('/assets',express.static('public')) url -> 3000/assets/nz.html but shourd change src in html for js/css/img
 app.use(cookieParser());
+app.use(helmet()); // 3rd party middleware not maintained by express
 //------------------------------------------------------------------------------
 // my custom middlware
 // logging
@@ -57,8 +60,26 @@ app.get('/api/students',(req,res)=>{
     res.json(students)
 })
 //------------------------------------------------------------------------------
+//param middleware
+app.param('id',(req,res,next,val)=>{ //val = value of url parameter = id
+    //validation of parameter
+    if(Number(val)){
+
+    
+    
+    //add param as a prop for request 
+    req.id = val;
+    
+    next();
+}else{
+    res.send('invalid id')
+}})
+//------------------------------------------------------------------------------
 app.get('/api/students/:id',(req,res)=>{
-    let id = req.params.id;
+    //let id = req.params.id;
+    let id = req.id;
+    console.log(req.id);
+    console.log(req.params.id);
     let std =   students.find((val,index,arr)=>{ 
                  return val.id ==id
                 })
@@ -97,6 +118,7 @@ app.post('/api/students',(req,res)=>{
     }
 })
 //------------------------------------------------------------------------------
+
 app.delete('/api/students/:id',(req,res)=>{
     let index = students.findIndex((val)=>{return val.id==req.params.id});
     if(index != -1){students.splice(index,1);}else{
