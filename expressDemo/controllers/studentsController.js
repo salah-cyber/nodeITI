@@ -4,8 +4,11 @@ const Student = require('../models/studentmodel');
 
 const getAllStudents = (req,res)=>{
     res.set('access-control-Allow-Origin', '*'); 
-    //res.json(students)
-    res.render('students.ejs',{std:Student.fetchAllStudents()});;
+    Student.fetchAllStudents((obj)=>{
+        res.render('students.ejs',{
+            std:obj
+        });
+    })
 }; 
 
 const getStudentById = (req,res)=>{
