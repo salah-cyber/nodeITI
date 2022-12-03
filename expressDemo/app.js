@@ -71,7 +71,9 @@ app.get('/welcome.html',(req,res)=>{
 })
 //------------------------------------------------------------------------------
 app.post('/welcome.html',(req,res)=>{
-    res.send(`thanks ${req.body.fnm} ${req.body.lnm} for send requirind data`);
+    res.cookie('usernm',req.body.fnm);//session cookie // console->document.cookie
+    res.cookie('usernm',Buffer.from(req.body.fnm).toString('base64'));//session cookie // console->document.cookie
+    res.send(`thanks ${req.body.fnm} ${req.body.lnm} for send requirind data`); // base64
 })
 //------------------------------------------------------------------------------
 app.post('/api/students',(req,res)=>{

@@ -4,5 +4,5 @@ built in middleware ->
                     express.static -> serve static files
 route handler -> app.get  all post delete .....
 custom/application level middleware -> implements cross cutting concerns like logging, athentication, authorization
-
+third party -> expressjs.com/en/resources/middleware.html / affect app performance 
 
