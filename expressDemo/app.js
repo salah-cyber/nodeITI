@@ -2,27 +2,20 @@
 const express = require('express') 
 const app = express();
 const path = require('path');
-const { read } = require('fs');
 const cookieParser = require('cookie-parser')
 const helmet = require("helmet"); // notice change in response header in browser
-app.use(helmet()); // 3rd party middleware not maintained by express
 const ejs = require('ejs');
 const studentsRouter = require('./routes/students.js');
-app.use('/api/students',studentsRouter);
+const logging = require('./middlewares/logging');
 //------------------------------------------------------------------------------
-app.use(express.urlencoded({extended:true}))
-app.use(express.json());
+app.use(helmet()); // 3rd party middleware not maintained by express
+app.use(express.urlencoded({extended:true})) //parse url encoded payload
+app.use(express.json()); // parse son sent by client throwgh reqest body
 app.use(express.static('public')) //static files(css, js,img, html,..)
 app.use(cookieParser());
+app.use('/api/students',studentsRouter);
+app.use(logging);
 //------------------------------------------------------------------------------
-// my custom middlware
-// logging
-app.use((req,res,next) => {
-    console.log("logging ..");
-    next();
-});
-//------------------------------------------------------------------------------
-
 const port = process.env.PORT||3000;
 app.listen(port,()=>{console.log(`listening....!!! port ${port}`)}); 
 //------------------------------------------------------------------------------

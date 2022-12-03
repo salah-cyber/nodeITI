@@ -1,22 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
+const validator = require('../util/studentsValidator')
 //--------------------------------------------------------------------------
 
-const Ajv = require("ajv");
-const ajv = new Ajv() 
-const schema = {
-    type: "object",
-    properties: {
-      name: {type: "string",'pattern':'^[A-Za-z]*$','maxLength':12,'minLength':2,},
-      course: {type: "string",'enum':['english','physiology','cs','it']}
-    },
-    required: ["name",'course'],
-    additionalProperties: false
-  }
-const validate = ajv.compile(schema);
 
-//------------------------------------------------------------------------------validator 
 
 const students = [
     {name:'sasa', course:'hesab',id:1},
@@ -72,7 +59,7 @@ router.get('/:id',(req,res)=>{
 //------------------------------------------------------------------------------
 
 router.post('/',(req,res)=>{
-    const valid = validate(req.body);
+    const valid = validator(req.body);
     if (valid) {
         req.body.id = students.length+1;
         students.push(req.body);
