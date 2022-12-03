@@ -7,4 +7,8 @@ custom/application level middleware -> implements cross cutting concerns like lo
 third party -> expressjs.com/en/resources/middleware.html / affect app performance 
 parameters middleware -> app.param
 
+template engine -> enable use if static template with placeholder which
+                    are replace with acttual vales in run time    pug   mutache   EJSS
 
+ not necessar to use template engine in server side 
+ use react angular engine for views as single app app

@@ -7,6 +7,7 @@ const { read } = require('fs');
 const ajv = new Ajv() 
 const cookieParser = require('cookie-parser')
 const helmet = require("helmet"); // notice change in response header in browser
+const ejs = require('ejs');
 //------------------------------------------------------------------------------
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
@@ -55,9 +56,14 @@ app.get('/'
        ,(req,res)=>{res.sendFile(path.join(__dirname,'/main.html')); }
        )
 //------------------------------------------------------------------------------
+//app settings 
+app.set('template engine', 'ejs');
+app.set('views', 'template');
+//------------------------------------------------------------------------------
 app.get('/api/students',(req,res)=>{
     res.set('access-control-Allow-Origin', '*'); 
-    res.json(students)
+    //res.json(students)
+    res.render('students.ejs',{std:students});;
 })
 //------------------------------------------------------------------------------
 //param middleware
