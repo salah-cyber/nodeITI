@@ -71,9 +71,10 @@ app.get('/welcome.html',(req,res)=>{
 })
 //------------------------------------------------------------------------------
 app.post('/welcome.html',(req,res)=>{
-    res.cookie('usernm',req.body.fnm);//session cookie // console->document.cookie
-    res.cookie('usernm',Buffer.from(req.body.fnm).toString('base64'));//session cookie // console->document.cookie
-    res.send(`thanks ${req.body.fnm} ${req.body.lnm} for send requirind data`); // base64
+    // res.cookie('usernm',req.body.fnm);//session cookie // console->document.cookie
+    res.cookie('usernm',Buffer.from(req.body.fnm).toString('base64'));// atob('encoded base64 tring') -> uncoded
+    res.cookie('value','25',{httpOnly:true});//httponly = cookie will appear in http header not in console by document.cookie(js)
+    res.send(`thanks ${req.body.fnm} ${req.body.lnm} for send requirind data`); 
 })
 //------------------------------------------------------------------------------
 app.post('/api/students',(req,res)=>{
