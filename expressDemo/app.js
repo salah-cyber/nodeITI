@@ -1,13 +1,16 @@
 const express = require('express') 
 const app = express();
 const path = require('path');
-const Ajv = require("ajv")
+const Ajv = require("ajv");
+const { read } = require('fs');
 const ajv = new Ajv() 
+const cookieParser = require('cookie-parser')
 //------------------------------------------------------------------------------
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
 app.use(express.static('public')) //static files(css, js,img, html,..)
 //app.use('/assets',express.static('public')) url -> 3000/assets/nz.html but shourd change src in html for js/css/img
+app.use(cookieParser());
 //------------------------------------------------------------------------------
 // my custom middlware
 // logging
@@ -73,9 +76,15 @@ app.get('/welcome.html',(req,res)=>{
 app.post('/welcome.html',(req,res)=>{
     // res.cookie('usernm',req.body.fnm);//session cookie // console->document.cookie
     res.cookie('usernm',Buffer.from(req.body.fnm).toString('base64'));// atob('encoded base64 tring') -> uncoded
-    res.cookie('value','25',{httpOnly:true});//httponly = cookie will appear in http header not in console by document.cookie(js)
+    res.cookie('age','25',{httpOnly:true});//httponly = cookie will appear in http header not in console by document.cookie(js)
     res.send(`thanks ${req.body.fnm} ${req.body.lnm} for send requirind data`); 
 })
+//------------------------------------------------------------------------------
+app.get('/abc', function(req, res) {
+    console.log(Buffer.from(req.cookies.usernm,'base64').toString());
+    console.log(req.cookies.age);
+    res.sendStatus('200'); // appear as OK in page
+});
 //------------------------------------------------------------------------------
 app.post('/api/students',(req,res)=>{
     const valid = validate(req.body);
