@@ -1,14 +1,19 @@
 const Ajv = require("ajv");
 const ajv = new Ajv() 
-const schema = {
+const schema = { //this validation on request body (req.body) 
     type: "object",
     properties: {
-      name: {type: "string",'pattern':'^[A-Za-z]*$','maxLength':12,'minLength':2,},
-      course: {type: "string",'enum':['english','physiology','cs','it']}
+      fn: {type: "string",'pattern':'^[A-Za-z]*$'},
+      ln: {type: "string",'pattern':'^[A-Za-z]*$'},
+      dept: {type: "string",'enum':['SD','SA','MD']}
     },
-    required: ["name",'course'],
-    additionalProperties: false
+    required: ["fn",'ln'],
+    //additionalProperties: false
   }
+
+
+
+
 module.exports = ajv.compile(schema);
 
-//------------------------------------------------------------------------------validator 
+//-----------------------------------------validator 

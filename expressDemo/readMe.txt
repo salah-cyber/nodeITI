@@ -12,3 +12,14 @@ template engine -> enable use if static template with placeholder which
 
  not necessar to use template engine in server side 
  use react angular engine for views as single app app
+
+
+
+ mongoDB  json-like document based Nosql, use js as a query language
+
+https://cloud.mongodb.com/v2/638cc8366fcf0a0a0cc42077#clusters
+
+
+
+
+git remote add origin repoURL
