@@ -10,6 +10,7 @@ const mongoose = require('mongoose'); //
 const userRouter = require("./routes/users")
 const authRouter = require("./routes/login=auth")
 const adminRouter = require("./routes/admin")
+const errorMW = require("./middlewares/errorMW")
 
 //..........................................................................................................................................................
 app.use(helmet()); // 3rd party middleware not maintained by express
@@ -17,10 +18,13 @@ app.use(express.urlencoded({extended:true})) //parse url encoded payload
 app.use(express.json()); // parse son sent by client throwgh reqest body
 app.use(express.static('public')) //static files(css, js,img, html,..)
 app.use(cookieParser());
+//custom middleware (Application-level-middleware)
 app.use('/api/users',userRouter);
 app.use('/api/students',studentsRouter);
 app.use('/api/login',authRouter);
 app.use('/api/admin',adminRouter);
+//error handling middleware , put after all middlewares
+app.use(errorMW); //express error middleware 
 //..........................................................................................................................................................
 const port = process.env.PORT||3000;
 app.listen(port,()=>{console.log(`listening....!!! port ${port}`)}); 

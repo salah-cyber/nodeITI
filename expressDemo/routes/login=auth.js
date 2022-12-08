@@ -4,7 +4,7 @@ const validator = require("../middlewares/authValidatorMW")
 const { User } = require("../models/userModelDB") // i need it in if user found 
 const bcrypt = require("bcrypt");
 
-router.post("/", validator, async (req, res) => {
+router.post("/", validator, async (req, res,next) => {
 
     try{
     //check email
@@ -32,10 +32,7 @@ router.post("/", validator, async (req, res) => {
     // we use web token to identify the user 
     // x-header because it is acustom header واخدين على كده 
     }catch{
-        for (let e in err.errors){
-            console.log(err.errors[e].message);
-            res.status(400).send("طلب سي ء");
-        }
+        next()
     }
 })
 

@@ -12,7 +12,7 @@ const bcrypt = require("bcrypt"); //hash passwords
 //1 - check if the user already exists
 
 
-router.post("/", validator, async (req, res) => {
+router.post("/", validator, async (req, res, next) => {
     try {
         console.log(".................1");
         let user = await User.findOne({email: req.body.email});
@@ -30,8 +30,7 @@ router.post("/", validator, async (req, res) => {
         res.header("x-auth-token",token)
         res.send("OK u are registered successfully");
     }catch (err) {
-        for (let e in err.errors) { console.log(err.errors[e].message); }
-        res.status(400).send('Bad Request .. some fields are missed ')
+        next()    
     }
     
 })
