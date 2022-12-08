@@ -27,7 +27,7 @@ let addNewStudent = (req, res) => {
 let getStudentById = async (req, res) => {
     try { //await statement not have catch so i wrap it in try catch statement
         let std = await Student.findById(req.params.id);
-        if (!std) return req.status(404).send("Student with the given id is not found ")
+        if (!std) return res.status(404).send("Student with the given id is not found ")
         res.send(std);
     }
     catch (err) {

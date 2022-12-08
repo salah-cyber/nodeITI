@@ -23,3 +23,13 @@ https://cloud.mongodb.com/v2/638cc8366fcf0a0a0cc42077#clusters
 
 
 git remote add origin repoURL
+
+
+authentication (logging)  -> then authorization (permissions)
+endpoint for registtation -< endpoint for login
+
+
+قعدت يوم كامل علشان احل خطأ 
+وهو اني عامل لو بيترجع نكست وبرة ال لو فيه نكست تانية
+وبالتالي بقى عندي اتنين من res.send()
+ينغني برجع ردين في نفس الوقت للعميل 

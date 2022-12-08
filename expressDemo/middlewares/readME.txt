@@ -8,3 +8,7 @@ module.exports = (req,res,next) => {
     ..
     next();
 };
+
+
+middleware is a fun can use util settings so import it
+and be used in router so export it 

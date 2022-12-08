@@ -6,16 +6,21 @@ const cookieParser = require('cookie-parser')
 const helmet = require("helmet"); // notice change in response header in browser
 const ejs = require('ejs');
 const studentsRouter = require('./routes/students.js'); //1)) the first thing after client enter an endpoint 
-const logging = require('./middlewares/logging');
 const mongoose = require('mongoose'); // 
+const userRouter = require("./routes/users")
+const authRouter = require("./routes/login=auth")
+const adminRouter = require("./routes/admin")
+
 //..........................................................................................................................................................
 app.use(helmet()); // 3rd party middleware not maintained by express
 app.use(express.urlencoded({extended:true})) //parse url encoded payload
 app.use(express.json()); // parse son sent by client throwgh reqest body
 app.use(express.static('public')) //static files(css, js,img, html,..)
 app.use(cookieParser());
+app.use('/api/users',userRouter);
 app.use('/api/students',studentsRouter);
-app.use(logging);
+app.use('/api/login',authRouter);
+app.use('/api/admin',adminRouter);
 //..........................................................................................................................................................
 const port = process.env.PORT||3000;
 app.listen(port,()=>{console.log(`listening....!!! port ${port}`)}); 
@@ -28,10 +33,10 @@ mongoose.connect("mongodb://127.0.0.1:27017/iti", { //mongoose connect fun retur
         .then(() => {console.log('database connected..')})
         .catch((err) => {console.log(err)});
         //..........................................................................................................................................................
-app.all('*',(req,res,next)=>{
-    console.log('this middleware will be executed every time whatever the method or url');
-    next();
-})
+// app.all('*',(req,res,next)=>{
+//     console.log('this middleware will be executed every time whatever the method or url');
+//     next();
+// })
 //..........................................................................................................................................................
 app.get('/'
        ,(req,res,next)=>{console.log('first middleWare');next();}
